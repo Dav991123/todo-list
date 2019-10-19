@@ -1,12 +1,18 @@
-import React from 'react';
+import React  from 'react';
 
 import './search-panel.css';
 
-const SearchPanel = () => {
+const SearchPanel = ({onSearch}) => {
+  const handleChangeInput = (e) => {
+    onSearch(e.target.value.toLocaleLowerCase())
+  }
   return (
-    <input type="text"
-              className="form-control search-input"
-              placeholder="type to search" />
+    <input
+         type="text"
+         className="form-control search-input"
+         placeholder="type to search"
+         onChange={handleChangeInput}
+    />
   );
 };
 
