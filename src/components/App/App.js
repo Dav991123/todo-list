@@ -3,6 +3,7 @@ import AppHeader from '../app-header';
 import SearchPanel from '../search-panel';
 import TodoList from '../todo-list';
 import ItemStatusFilter from '../item-status-filter';
+import ItemAddForm from "../item-add-form";
 import './index.css';
 const App = () => {
     const [ todoData, setTodoData ] = useState([
@@ -10,13 +11,18 @@ const App = () => {
         { label: 'Make Awesome App', important: true, id: 2 },
         { label: 'Have a lunch', important: false, id: 3 }
     ]);
+    const addTodoItem = (item) => {
+        setTodoData([
+            ...todoData,
+            item
+        ])
+    };
     const deletedItem = (id) => {
         setTodoData(() => {
             const idx = todoData.findIndex(item => item.id === id);
             todoData.splice(idx, 1);
             return [...todoData]
         })
-
     };
     return (
         <div className="todo-app">
@@ -29,6 +35,10 @@ const App = () => {
             <TodoList
                 todos={todoData}
                 onDeleted={(id) => deletedItem(id)}
+            />
+            <ItemAddForm
+                todos={todoData}
+                onAddTodoItem={addTodoItem}
             />
         </div>
     );
