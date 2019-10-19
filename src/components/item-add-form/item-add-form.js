@@ -1,14 +1,9 @@
 import React, { useRef } from 'react';
 import './item-add-form.css';
-const ItemAddForm = ({todos, onAddTodoItem}) => {
+const ItemAddForm = ({onAddTodoItem}) => {
     const inputAdd = useRef(null);
     const handleGetInputValue = () => {
-        console.log(inputAdd)
-        onAddTodoItem({
-            label: inputAdd.current.value,
-            important: false,
-            id: todos.length + 1
-        });
+        onAddTodoItem(inputAdd.current.value);
         inputAdd.current.value = ''
     };
     return (

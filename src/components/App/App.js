@@ -7,14 +7,22 @@ import ItemAddForm from "../item-add-form";
 import './index.css';
 const App = () => {
     const [ todoData, setTodoData ] = useState([
-        { label: 'Drink Coffee', important: false, id: 1 },
-        { label: 'Make Awesome App', important: true, id: 2 },
-        { label: 'Have a lunch', important: false, id: 3 }
+        { label: 'Drink Coffee', done: false, important: false, id: 1 },
+        { label: 'Make Awesome App',done: false, important: true, id: 2 },
+        { label: 'Have a lunch', done: false,  important: false, id: 3 }
     ]);
-    const addTodoItem = (item) => {
+    const createTotoItem = (label) => {
+        return {
+            label,
+            important: false,
+            done: false,
+            id: todoData.length + 1
+        }
+    }
+    const addTodoItem = (text) => {
         setTodoData([
             ...todoData,
-            item
+            createTotoItem(text)
         ])
     };
     const deletedItem = (id) => {
@@ -24,6 +32,22 @@ const App = () => {
             return [...todoData]
         })
     };
+
+    const onToggleImportant = (id) => {
+        const idx  = todoData.findIndex(item => item.id === id);
+        setTodoData(() => {
+            todoData[idx].important = !todoData[idx].important;
+            return [...todoData]
+        })
+    };
+    const onToggleDone = (id) => {
+        const idx  = todoData.findIndex(item => item.id === id);
+        setTodoData(() => {
+            todoData[idx].done = !todoData[idx].done;
+            return [...todoData]
+        })
+    };
+    console.log(todoData)
     return (
         <div className="todo-app">
             <AppHeader toDo={1} done={3} />
@@ -35,9 +59,10 @@ const App = () => {
             <TodoList
                 todos={todoData}
                 onDeleted={(id) => deletedItem(id)}
+                onToggleImportant={onToggleImportant}
+                onToggleDone={onToggleDone}
             />
             <ItemAddForm
-                todos={todoData}
                 onAddTodoItem={addTodoItem}
             />
         </div>
